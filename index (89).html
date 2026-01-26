@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saif Ullah - Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a0933 50%, #0f0f23 100%);
+            color: white;
+            overflow-x: hidden;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateX(0); }
+            25% { transform: translateY(-20px) translateX(10px); }
+            50% { transform: translateY(-10px) translateX(-10px); }
+            75% { transform: translateY(-30px) translateX(5px); }
+        }
+
+        .bubble-decoration {
+            position: fixed;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(6, 182, 212, 0.2));
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .bubble1 { width: 200px; height: 200px; top: 10%; left: 5%; animation: float 6s ease-in-out infinite; }
+        .bubble2 { width: 150px; height: 150px; top: 60%; left: 80%; animation: float 8s ease-in-out 1s infinite; }
+        .bubble3 { width: 100px; height: 100px; top: 30%; left: 90%; animation: float 7s ease-in-out 2s infinite; }
+        .bubble4 { width: 180px; height: 180px; top: 80%; left: 10%; animation: float 9s ease-in-out 0.5s infinite; }
+        .bubble5 { width: 120px; height: 120px; top: 40%; left: 70%; animation: float 7.5s ease-in-out 1.5s infinite; }
+
+        nav {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s;
+        }
+
+        nav.scrolled {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-shadow: 0 0 40px rgba(168, 85, 247, 0.8);
+        }
+
+        .nav-links {
+            display: none;
+            gap: 2rem;
+        }
+
+        .nav-links.active {
+            display: flex;
+            flex-direction: column;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+            backdrop-filter: blur(10px);
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+        }
+
+        @media (min-width: 768px) {
+            .nav-links {
+                display: flex;
+                flex-direction: row;
+            }
+            .menu-toggle { display: none; }
+        }
+
+        .nav-links a {
+            color: #d1d5db;
+            text-decoration: none;
+            text-transform: capitalize;
+            transition: all 0.3s;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: #a855f7;
+            text-shadow: 0 0 20px rgba(168, 85, 247, 0.8);
+            transform: scale(1.1);
+        }
+
+        .menu-toggle {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 5rem 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .bubble-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            transition: all 0.3s;
+        }
+
+        .bubble-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px 0 rgba(168, 85, 247, 0.5);
+        }
+
+        .glow-text {
+            text-shadow: 0 0 40px rgba(168, 85, 247, 0.8), 0 0 80px rgba(168, 85, 247, 0.6);
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        @media (min-width: 768px) {
+            h1 { font-size: 5rem; }
+            h2 { font-size: 3.5rem; }
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(90deg, #a855f7, #ec4899, #06b6d4);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-description {
+            font-size: 1.125rem;
+            color: #d1d5db;
+            margin-bottom: 2rem;
+            line-height: 1.75;
+        }
+
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, #7c3aed, #06b6d4);
+            color: white;
+            box-shadow: 0 4px 20px rgba(168, 85, 247, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 30px rgba(168, 85, 247, 0.6);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            transform: scale(1.1);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .grid {
+            display: grid;
+            gap: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .grid-2 { grid-template-columns: repeat(2, 1fr); }
+            .grid-3 { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        .skill-item {
+            margin-bottom: 1.5rem;
+        }
+
+        .skill-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .skill-name {
+            font-size: 1.125rem;
+            font-weight: 600;
+        }
+
+        .skill-percent {
+            color: #a855f7;
+            font-weight: bold;
+        }
+
+        .skill-bar-bg {
+            width: 100%;
+            height: 0.75rem;
+            background: rgba(100, 116, 139, 0.5);
+            border-radius: 1rem;
+            overflow: hidden;
+        }
+
+        .skill-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #a855f7, #06b6d4);
+            border-radius: 1rem;
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.6);
+            transition: width 1s ease-out;
+        }
+
+        .project-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .project-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 60px 0 rgba(168, 85, 247, 0.5);
+        }
+
+        .project-icon {
+            width: 2rem;
+            height: 2rem;
+            margin-bottom: 1rem;
+            color: #a855f7;
+        }
+
+        .project-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: linear-gradient(90deg, #a855f7, #06b6d4);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .project-description {
+            color: #d1d5db;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tech-tag {
+            font-size: 0.75rem;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-weight: 600;
+        }
+
+        .service-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .service-card:hover {
+            transform: scale(1.1);
+        }
+
+        .service-icon {
+            display: inline-block;
+            padding: 1rem;
+            border-radius: 1rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s;
+        }
+
+        .service-card:hover .service-icon {
+            transform: scale(1.1);
+        }
+
+        .gradient-blue { background: linear-gradient(135deg, #3b82f6, #06b6d4); }
+        .gradient-purple { background: linear-gradient(135deg, #7c3aed, #ec4899); }
+        .gradient-green { background: linear-gradient(135deg, #10b981, #059669); }
+        .gradient-orange { background: linear-gradient(135deg, #f97316, #ef4444); }
+        .gradient-indigo { background: linear-gradient(135deg, #6366f1, #3b82f6); }
+        .gradient-violet { background: linear-gradient(135deg, #8b5cf6, #7c3aed); }
+
+        .service-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .service-description {
+            color: #d1d5db;
+            line-height: 1.6;
+        }
+
+        .contact-links {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        @media (min-width: 768px) {
+            .contact-links {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        .contact-link {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.75rem;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            text-decoration: none;
+            color: white;
+            transition: all 0.3s;
+        }
+
+        .contact-link:hover {
+            transform: scale(1.1);
+            color: #06b6d4;
+        }
+
+        .contact-icon {
+            width: 2rem;
+            height: 2rem;
+            color: #a855f7;
+            transition: all 0.3s;
+        }
+
+        .contact-link:hover .contact-icon {
+            color: #06b6d4;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-input, .form-textarea {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 1rem;
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .form-input:focus, .form-textarea:focus {
+            outline: none;
+            border-color: #a855f7;
+            box-shadow: 0 0 0 2px rgba(168, 85, 247, 0.3);
+        }
+
+        .form-input::placeholder, .form-textarea::placeholder {
+            color: #9ca3af;
+        }
+
+        .form-textarea {
+            resize: none;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255, 255, 255, 0.18);
+        }
+
+        .footer-name {
+            font-size: 1.25rem;
+            font-weight: 600;
+            text-shadow: 0 0 40px rgba(168, 85, 247, 0.8);
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-copyright {
+            color: #9ca3af;
+        }
+
+        .scroll-arrow {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+            cursor: pointer;
+            color: #a855f7;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-10px); }
+        }
+
+        .hidden { display: none; }
+
+        /* SVG Icons */
+        .icon { width: 24px; height: 24px; }
+        .icon-lg { width: 32px; height: 32px; }
+        .icon-xl { width: 40px; height: 40px; }
+    </style>
+</head>
+<body>
+    <!-- Floating Bubbles -->
+    <div class="bubble-decoration bubble1"></div>
+    <div class="bubble-decoration bubble2"></div>
+    <div class="bubble-decoration bubble3"></div>
+    <div class="bubble-decoration bubble4"></div>
+    <div class="bubble-decoration bubble5"></div>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="logo glow-text">Saif Ullah</div>
+            <div class="nav-links" id="navLinks">
+                <a href="#home" class="nav-link active">Home</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#projects" class="nav-link">Projects</a>
+                <a href="#services" class="nav-link">Services</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </div>
+            <button class="menu-toggle" id="menuToggle">☰</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home">
+        <div class="container">
+            <div class="bubble-card" style="text-align: center;">
+                <h1 class="glow-text">Saif Ullah</h1>
+                <h2 class="hero-subtitle">Front-end Web Developer</h2>
+                <p class="hero-description">
+                    Passionate about crafting exceptional digital experiences through clean code and innovative design. 
+                    I specialize in transforming ideas into elegant, user-friendly web applications that combine aesthetic 
+                    appeal with powerful functionality. With expertise in modern web technologies and a keen eye for detail, 
+                    I build responsive, performant, and accessible websites that deliver seamless experiences across all devices. 
+                    Committed to continuous learning and staying ahead of industry trends to deliver cutting-edge solutions.
+                </p>
+                <div class="btn-group">
+                    <a href="#projects" class="btn btn-primary">View My Work</a>
+                    <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+                </div>
+            </div>
+            <div class="scroll-arrow" onclick="scrollToSection('about')">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="6 9 12 15 18 9"/>
+                </svg>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="container">
+            <h2 class="glow-text">About Me</h2>
+            <div class="bubble-card">
+                <p style="color: #d1d5db; margin-bottom: 1.5rem; line-height: 1.75; font-size: 1.125rem;">
+                    I am a dedicated and enthusiastic front-end web developer with a strong foundation in creating dynamic 
+                    and visually appealing web applications. My journey in web development began with a fascination for how 
+                    technology can solve real-world problems and enhance user experiences. Over time, I have honed my skills 
+                    in various programming languages and frameworks, allowing me to bring creative visions to life.
+                </p>
+                <p style="color: #d1d5db; margin-bottom: 1.5rem; line-height: 1.75; font-size: 1.125rem;">
+                    With a solid understanding of HTML, CSS, and JavaScript, I craft pixel-perfect interfaces that are not 
+                    only beautiful but also highly functional. My expertise extends to backend technologies like Python and 
+                    C++, enabling me to build full-stack applications when needed. I believe in writing clean, maintainable 
+                    code and following best practices to ensure scalability and performance.
+                </p>
+                <p style="color: #d1d5db; margin-bottom: 2rem; line-height: 1.75; font-size: 1.125rem;">
+                    Beyond coding, I am proficient in MS Office and possess strong computer skills that complement my 
+                    technical abilities. I am constantly learning and adapting to new technologies, staying current with 
+                    industry trends. My goal is to create digital solutions that make a positive impact and deliver 
+                    exceptional value to users and businesses alike.
+                </p>
+
+                <h3 style="font-size: 2rem; font-weight: bold; text-align: center; margin-bottom: 2rem; background: linear-gradient(90deg, #a855f7, #06b6d4); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">
+                    My Skills
+                </h3>
+                
+                <div id="skillsContainer"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects">
+        <div class="container">
+            <h2 class="glow-text">Projects</h2>
+            <div class="grid grid-2">
+                <div class="project-card">
+                    <svg class="project-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+                    </svg>
+                    <h3 class="project-title">Question Answering System Using NLP</h3>
+                    <p class="project-description">
+                        An intelligent question answering system powered by Natural Language Processing that understands context and provides accurate answers. Built with a robust Flask backend and interactive frontend, this system processes natural language queries and delivers precise responses using advanced NLP algorithms and machine learning techniques.
+                    </p>
+                    <div class="tech-tags">
+                        <span class="tech-tag">HTML</span>
+                        <span class="tech-tag">CSS</span>
+                        <span class="tech-tag">JavaScript</span>
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">Flask</span>
+                        <span class="tech-tag">NLP</span>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <svg class="project-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+                    </svg>
+                    <h3 class="project-title">School Chatbot</h3>
+                    <p class="project-description">
+                        A smart conversational chatbot designed for educational institutions to assist students and staff with queries about schedules, courses, admissions, and general information. Features an intuitive interface with real-time responses and natural conversation flow to enhance user experience.
+                    </p>
+                    <div class="tech-tags">
+                        <span class="tech-tag">HTML</span>
+                        <span class="tech-tag">CSS</span>
+                        <span class="tech-tag">JavaScript</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services">
+        <div class="container">
+            <h2 class="glow-text">My Services</h2>
+            <div class="grid grid-3">
+                <div class="service-card">
+                    <div class="service-icon gradient-blue">
+                        <svg class="icon-xl" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>
+                        </svg>
+                    </div>
+                    <h3 class="service-title">Frontend Development</h3>
+                    <p class="service-description">Creating responsive and interactive user interfaces with modern web technologies</p>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon gradient-purple">
+                        <svg class="icon-xl" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/>
+                            <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/>
+                        </svg>
+                    </div>
+                    <h3 class="service-title">UI/UX Design</h3>
+                    <p class="service-description">Designing beautiful and user-friendly interfaces that enhance user experience</p>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon gradient-green">
+                        <svg class="icon-xl" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+                        </svg>
+                    </div>
+                    <h3 class="service-title">Backend Development</h3>
+                    <p class="service-description">Building robust server-side applications with Python and Flask framework</p>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon gradient-orange">
+                        <svg class="icon-xl" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                        </svg>
+                    </div>
+                    <h3 class="service-title">Web Applications</h3>
+                    <p class="service-description">Developing full-stack web applications with modern technologies and best practices</p>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon gradient-indigo">
+                        <svg class="icon-xl" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/>
+                        </svg>
+                    </div>
+                    <h3 class="service-title">Responsive Design</h3>
+                    <p class="service-description">Ensuring seamless experience across all devices from mobile to desktop</p>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon gradient-violet">
+                        <svg class="icon-xl" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="4" y="4" width="16" height="16" rx="2" ry="2"/><rect x="9" y="9" width="6"height="6"/>
+<!-- Contact Section -->
+<section id="contact">
+    <div class="container">
+        <h2 class="glow-text">Get In Touch</h2>
+        <div class="bubble-card">
+            <p style="font-size: 1.25rem; color: #d1d5db; margin-bottom: 3rem; text-align: center;">
+                I'm always excited to connect and collaborate on new projects. Let's create something amazing together!
+            </p>
+            
+            <div class="contact-links">
+                <a href="mailto:saifkhanswati48@gmail.com" class="contact-link">
+                    <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                        <polyline points="22,6 12,13 2,6"/>
+                    </svg>
+                    <span>Email</span>
+                </a>
+
+                <a href="https://github.com/SaifUllah22207" target="_blank" rel="noopener noreferrer" class="contact-link">
+                    <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+                    </svg>
+                    <span>GitHub</span>
+                </a>
+
+                <a href="https://www.linkedin.com/in/saif-ullah-848b63224" target="_blank" rel="noopener noreferrer" class="contact-link">
+                    <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+                        <rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>
+                    </svg>
+                    <span>LinkedIn</span>
+                </a>
+
+                <a href="https://wa.me/qr/MQ4UQ7ETBXDRI1" target="_blank" rel="noopener noreferrer" class="contact-link">
+                    <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+                    </svg>
+                    <span>WhatsApp</span>
+                </a>
+            </div>
+
+            <div class="contact-form">
+                <input type="text" class="form-input" placeholder="Your Name">
+                <input type="email" class="form-input" placeholder="Your Email">
+                <textarea class="form-textarea" rows="5" placeholder="Your Message"></textarea>
+                <button class="btn btn-primary" style="width: 100%; font-size: 1.125rem;">Send Message</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <p class="footer-name">Saif Ullah</p>
+    <p class="footer-copyright">© 2026 All rights reserved.</p>
+</footer>
+
+<script>
+    // Skills data
+    const skills = [
+        { name: "HTML", level: 90 },
+        { name: "CSS", level: 85 },
+        { name: "JavaScript", level: 80 },
+        { name: "Python", level: 85 },
+        { name: "C++", level: 75 },
+        { name: "MS Office", level: 90 },
+        { name: "Computer Skills", level: 88 }
+    ];
+
+    // Render skills
+    const skillsContainer = document.getElementById('skillsContainer');
+    skills.forEach(skill => {
+        const skillItem = document.createElement('div');
+        skillItem.className = 'skill-item';
+        skillItem.innerHTML = `
+            <div class="skill-header">
+                <span class="skill-name">${skill.name}</span>
+                <span class="skill-percent">${skill.level}%</span>
+            </div>
+            <div class="skill-bar-bg">
+                <div class="skill-bar" style="width: 0%" data-width="${skill.level}%"></div>
+            </div>
+        `;
+        skillsContainer.appendChild(skillItem);
+    });
+
+    // Animate skill bars when in view
+    const animateSkillBars = () => {
+        const skillBars = document.querySelectorAll('.skill-bar');
+        skillBars.forEach(bar => {
+            const rect = bar.getBoundingClientRect();
+            if (rect.top < window.innerHeight && rect.bottom > 0) {
+                const width = bar.getAttribute('data-width');
+                bar.style.width = width;
+            }
+        });
+    };
+
+    // Smooth scroll function
+    function scrollToSection(sectionId) {
+        const section = document.getElementById(sectionId);
+        section.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Navigation
+    const menuToggle = document.getElementById('menuToggle');
+    const navLinks = document.getElementById('navLinks');
+    const navbar = document.getElementById('navbar');
+
+    menuToggle.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+    });
+
+    // Close menu when clicking a link
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const targetId = link.getAttribute('href').substring(1);
+            scrollToSection(targetId);
+            navLinks.classList.remove('active');
+            
+            // Update active link
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+            link.classList.add('active');
+        });
+    });
+
+    // Scroll events
+    window.addEventListener('scroll', () => {
+        // Add scrolled class to navbar
+        if (window.scrollY > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+
+        // Animate skill bars
+        animateSkillBars();
+
+        // Update active nav link
+        const sections = ['home', 'about', 'projects', 'services', 'contact'];
+        sections.forEach(sectionId => {
+            const section = document.getElementById(sectionId);
+            const rect = section.getBoundingClientRect();
+            if (rect.top <= 100 && rect.bottom >= 100) {
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${sectionId}`) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+        });
+    });
+
+    // Initial skill bar animation
+    setTimeout(animateSkillBars, 500);
+</script>
+
+                            
+                            
